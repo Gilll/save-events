@@ -145,6 +145,11 @@ function initMetrica() {
 					//touchPoints[index].offset({top: el.clientY, left: el.clientX })
 					touchPoints[index].css('top', el.clientY );
 					touchPoints[index].css('left', el.clientX );
+					touchPoints[index].css('width', el.width );
+					touchPoints[index].css('height', el.height );
+					if (el.rotationAngle) {
+						touchPoints[index].css('transform', 'rotate(' + el.rotationAngle + 'deg)' );
+					}
 				})
 			}
 			coordsIndex++
@@ -184,10 +189,19 @@ function initMetrica() {
 	}
 
 	function handleMove(evt) {
-		let touches = evt.changedTouches;
-		ongoingTouches = []
+		let touches = evt.changedTouches,
+			touch;
+			ongoingTouches = []
+
 		for (let i = 0; i < touches.length; i++) {
-			ongoingTouches.push({ clientX: Math.round(touches.item(i).clientX), clientY: Math.round(touches.item(i).clientY) })
+			touch = touches.item(i);
+			ongoingTouches.push({
+				clientX: Math.round(touch.clientX),
+				clientY: Math.round(touch.clientY),
+				width: Math.round(touch.radiusX ? ( touch.radiusX > 3 ? touch.radiusX*2 : (touch.radiusX*20)) : 25),
+				height: Math.round(touch.radiusY ? ( touch.radiusY > 3 ? touch.radiusY*2 : (touch.radiusY*20)) : 25),
+				rotationAngle: Math.round(touch.rotationAngle)
+			})
 			/*let idx = ongoingTouchIndexById(touches[i].identifier);
 			if (idx >= 0) {
 				ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
@@ -202,7 +216,6 @@ function initMetrica() {
 
 	function handleCancel() {
 		ongoingTouches.splice(0, 1);
-		console.log(ongoingTouches)
 	}
 
 	function ongoingTouchIndexById(idToFind) {
@@ -439,7 +452,7 @@ $(document).ready(function () {
 						background-color: black;
 						color: white;
 						font-size: 18px;
-						top: 9rem;
+						top: 3rem;
 						z-index: 999999999999999999999;
 						padding: 0.5em 1em;
 						cursor: pointer;
