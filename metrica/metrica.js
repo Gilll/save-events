@@ -198,8 +198,8 @@ function initMetrica() {
 			ongoingTouches.push({
 				clientX: Math.round(touch.clientX),
 				clientY: Math.round(touch.clientY),
-				width: Math.round(touch.radiusX ? ( touch.radiusX > 3 ? touch.radiusX*2 : (touch.radiusX*20)) : 25),
-				height: Math.round(touch.radiusY ? ( touch.radiusY > 3 ? touch.radiusY*2 : (touch.radiusY*20)) : 25),
+				width: Math.round(touch.radiusX ? ( touch.radiusX > 3 ? touch.radiusX*2 : (touch.radiusX*20)) : 20),
+				height: Math.round(touch.radiusY ? ( touch.radiusY > 3 ? touch.radiusY*2 : (touch.radiusY*20)) : 20),
 				rotationAngle: Math.round(touch.rotationAngle)
 			})
 			/*let idx = ongoingTouchIndexById(touches[i].identifier);
